@@ -16,7 +16,7 @@ dec = int(d)+int(m)/60+float(s)/3600
 
 h, m, s = RA.split(':')
 ra = 15*(int(h)+int(m)/60+float(s)/3600)
-ra = ra/math.cos(dec*pi/180)
+ra = ra/math.cos(dec*math.pi/180)
 
 NSRC = 1_000_000
 
@@ -33,5 +33,5 @@ for i in range(NSRC):
 with open('catalog.csv','w', encoding='utf-8') as f:
     print("id,ra,dec", file=f)
     for i in range(NSRC):
-        print("{0:07d}, {1:12f}, {2:12f}".format(i, ras[i], decs[i]), file=f)
+        print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)
 #
