@@ -1,8 +1,8 @@
 # Determine Andromeda location in ra/dec degrees
 
 # convert to decimal degrees
-from math import *
-from random import *
+import math
+import random
 
 # from wikipedia
 ra = '00:42:44.3'
@@ -13,7 +13,7 @@ dec = int(d)+int(m)/60+float(s)/3600
 
 h, m, s = ra.split(':')
 ra = 15*(int(h)+int(m)/60+float(s)/3600)
-ra = ra/cos(dec*pi/180)
+ra = ra/math.cos(dec*pi/180)
 
 nsrc = 1_000_000
 
@@ -22,8 +22,8 @@ nsrc = 1_000_000
 ras = []
 decs = []
 for i in range(nsrc):
-    ras.append(ra + uniform(-1,1))
-    decs.append(dec + uniform(-1,1))
+    ras.append(ra + random.uniform(-1,1))
+    decs.append(dec + random.uniform(-1,1))
 
 
 # now write these to a csv file for use by my other program
