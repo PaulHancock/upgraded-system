@@ -1,9 +1,12 @@
-# Determine Andromeda location in ra/dec degrees
+"""
+A script to simulate a population of stars around the Andromeda galaxy
+"""
 
 # convert to decimal degrees
 import math
 import random
 
+# Determine Andromeda location in ra/dec degrees
 # from wikipedia
 RA = '00:42:44.3'
 DEC = '41:16:09'
