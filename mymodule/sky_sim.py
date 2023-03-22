@@ -6,6 +6,7 @@ A script to simulate a population of stars around the Andromeda galaxy
 import math
 import random
 import argparse
+import numpy as np
 
 NSRC = 1_000_000
 
@@ -31,12 +32,13 @@ def make_stars(ra, dec, num_stars):
     """
     make 1000 stars within 1 degree of Andromeda
     """
-
-    ras = []
-    decs = []
-    for i in range(num_stars):
-        ras.append(ra + random.uniform(-1,1))
-        decs.append(dec + random.uniform(-1,1))
+    ras = np.random.uniform(size=num_stars, low=ra-1, high=ra+1)
+    decs = np.random.uniform(size=num_stars, low=dec-1, high=dec+1)
+    #ras = []
+    #decs = []
+    #for i in range(num_stars):
+    #    ras.append(ra + random.uniform(-1,1))
+    #    decs.append(dec + random.uniform(-1,1))
     return (ras, decs)
 
 
@@ -68,14 +70,20 @@ def main():
     else:
         ra = options.ra
         dec = options.dec
-
-    ras, decs = make_stars(ra, dec, NSRC)
+    with open(options.out,'w', encoding='utf-8') as f:
+              print("id,ra,dec", file=f)
+              ras, decs = make_stars(ra, dec, NSRC)
+              ids = np.arange(NSRC).astype(str).astype(object)
+              ids = np.char.zfill(ids, 7)
+              data = np.column_stack((ids, ras, decs))
+              np.savetxt(f, data, fmt="%s, %12f, %12f")
+    #ras, decs = make_stars(ra, dec, NSRC)
 
     # now write these to a csv file for use by my other program
-    with open(options.out,'w', encoding='utf-8') as f:
-        print("id,ra,dec", file=f)
-        for i in range(NSRC):
-            print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)
+    #with open(options.out,'w', encoding='utf-8') as f:
+    #    print("id,ra,dec", file=f)
+    #    for i in range(NSRC):
+    #        print(f"{i:07d}, {ras[i]:12f}, {decs[i]:12f}", file=f)
     return
 
     
